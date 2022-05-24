@@ -43,39 +43,53 @@ export default class Login extends Component {
     history.push('/game');
   }
 
+  onClickSettings = () => {
+    const { history } = this.props;
+    history.push('/settings');
+  }
+
   render() {
     const { nome, email, disabled } = this.state;
     return (
-      <form>
-        <label htmlFor="nome">
-          Nome
-          <input
-            data-testid="input-player-name"
-            name="nome"
-            value={ nome }
-            onChange={ this.handleChange }
-            type="text"
-          />
-        </label>
-        <label htmlFor="email">
-          E-mail
-          <input
-            data-testid="input-gravatar-email"
-            name="email"
-            value={ email }
-            onChange={ this.handleChange }
-            type="email"
-          />
-        </label>
+      <>
+        <form>
+          <label htmlFor="nome">
+            Nome
+            <input
+              data-testid="input-player-name"
+              name="nome"
+              value={ nome }
+              onChange={ this.handleChange }
+              type="text"
+            />
+          </label>
+          <label htmlFor="email">
+            E-mail
+            <input
+              data-testid="input-gravatar-email"
+              name="email"
+              value={ email }
+              onChange={ this.handleChange }
+              type="email"
+            />
+          </label>
+          <button
+            data-testid="btn-play"
+            type="button"
+            disabled={ disabled }
+            onClick={ this.getToken }
+          >
+            Play
+          </button>
+        </form>
         <button
-          data-testid="btn-play"
           type="button"
-          disabled={ disabled }
-          onClick={ this.getToken }
+          data-testid="btn-settings"
+          onClick={ this.onClickSettings }
         >
-          Play
+          Settings
         </button>
-      </form>
+      </>
     );
   }
 }
