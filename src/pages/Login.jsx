@@ -37,6 +37,7 @@ export default class Login extends Component {
     const data = await response.json();
     const { token } = data;
 
+    console.log('entrou');
     const { history } = this.props;
 
     localStorage.setItem('token', token);
@@ -57,6 +58,7 @@ export default class Login extends Component {
             Nome
             <input
               data-testid="input-player-name"
+              id="nome"
               name="nome"
               value={ nome }
               onChange={ this.handleChange }
@@ -67,6 +69,7 @@ export default class Login extends Component {
             E-mail
             <input
               data-testid="input-gravatar-email"
+              id="email"
               name="email"
               value={ email }
               onChange={ this.handleChange }
