@@ -42,7 +42,7 @@ class Login extends Component {
     const { history, sendInfo } = this.props;
     const { nome, email } = this.state;
 
-    sendInfo({ nome, email });
+    sendInfo({ name: nome, email });
 
     localStorage.setItem('token', token);
     history.push('/game');
@@ -69,6 +69,7 @@ class Login extends Component {
               type="text"
             />
           </label>
+          <br />
           <label htmlFor="email">
             E-mail
             <input

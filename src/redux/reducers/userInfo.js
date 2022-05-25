@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   gravatarEmail: '',
 };
 
-function userInfoReducer(state = INITIAL_STATE, action) {
+function player(state = INITIAL_STATE, action) {
   switch (action.type) {
   case USER_INFO:
     return { ...state,
@@ -18,4 +18,4 @@ function userInfoReducer(state = INITIAL_STATE, action) {
   }
 }
 
-export default userInfoReducer;
+export default player;
