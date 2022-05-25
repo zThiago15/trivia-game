@@ -1,15 +1,15 @@
+import { USER_INFO } from '../actions/userInfo';
+
 const INITIAL_STATE = {
-  player: {
-    name: '',
-    assertions: '',
-    score: '',
-    gravatarEmail: '',
-  },
+  name: '',
+  assertions: '',
+  score: 0,
+  gravatarEmail: '',
 };
 
 function userInfoReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-  case 'USER_INFO':
+  case USER_INFO:
     return { ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email };
@@ -17,4 +17,5 @@ function userInfoReducer(state = INITIAL_STATE, action) {
     return state;
   }
 }
+
 export default userInfoReducer;

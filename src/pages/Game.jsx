@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
+import Header from '../redux/componentes/Header';
 
-export default class TelaJogo extends Component {
+class Game extends Component {
   render() {
     return (
-      <header>
-        <img alt="avatar" data-testid="header-profile-picture" />
-      </header>
+      <Header />
     );
   }
 }
+
+export default Game;
