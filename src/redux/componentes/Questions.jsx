@@ -16,6 +16,7 @@ class Question extends Component {
   componentDidMount() {
     const { sendQuestion } = this.props;
     sendQuestion();
+    this.setState({ loading: false });
   }
 
   invalidationToken = () => {
@@ -35,15 +36,19 @@ class Question extends Component {
   render() {
     const { result } = this.props;
     const { indexAlternativa, loading } = this.state;
-    const indexAtual = result[indexAlternativa];
-    let alternativas = [...indexAtual.incorrect_answers, indexAtual.correct_answer];
-    const number = 0.5;
-    alternativas = alternativas.sort(() => Math.random() - number);
+    let indexAtual = {};
+    let alternativas = [];
+    if (result !== undefined) {
+      indexAtual = result[indexAlternativa];
+      alternativas = [...indexAtual.incorrect_answers, indexAtual.correct_answer];
+      const number = 0.5;
+      alternativas = alternativas.sort(() => Math.random() - number);
+    }
 
     return (
       <div>
         {
-          result ? <Loading />
+          loading ? <Loading />
             : (
               <div>
                 <h2 data-testid="question-category">{ indexAtual.category }</h2>
