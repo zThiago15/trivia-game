@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Questions } from '../actions/userInfo';
 import Loading from './Loading';
+import actionQuest from '../actions/userInfo';
 
 class Question extends Component {
   constructor() {
@@ -17,15 +17,26 @@ class Question extends Component {
     const { sendQuestion } = this.props;
     sendQuestion();
     this.setState({ loading: false });
+    this.questions();
   }
 
-  invalidationToken = () => {
-    const tokenSalvo = localStorage.getItem('token');
-    const { history } = this.props;
-    if (!tokenSalvo) {
-      return history.push('/');
+  questions = () => async (dispatch) => {
+    try {
+      const numberErro = 3;
+      const token = localStorage.getItem('token');
+      const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+      const result = await response.json();
+      if (result.response_code === numberErro) {
+        const { history } = this.props;
+        token.localStorage.removeItem('token');
+        history.push('/');
+      } else {
+        dispatch(actionQuest(result));
+      }
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
   proximaQuestao = () => {
     this.setState((state) => ({
@@ -78,12 +89,9 @@ class Question extends Component {
   }
 }
 
-const mapDispatchToProps = ((dispatch) => ({
-  sendQuestion: (state) => dispatch(Questions(state)),
-}));
-
 const mapStateToProps = (state) => ({
   result: state.game.questions.results,
+  code: state.game.questions.response_code,
 });
 
 Question.propTypes = {
@@ -91,6 +99,7 @@ Question.propTypes = {
     push: PropTypes.func,
   }),
   result: PropTypes.array,
+  code: PropTypes.number,
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Question);
+export default connect(mapStateToProps, null)(Question);

@@ -11,15 +11,15 @@ export const actionQuest = (questions) => ({
   questions,
 });
 
-export const Questions = () => async (dispatch) => {
-  try {
-    const token = localStorage.getItem('token');
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
-    const result = await response.json();
-    dispatch(actionQuest(result));
-  } catch (error) {
-    console.log(error);
-  }
-};
+// export const Questions = () => async (dispatch) => {
+//   try {
+//     const token = localStorage.getItem('token');
+//     const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+//     const result = await response.json();
+//     dispatch(actionQuest(result));
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
 
 export default actionUserInfo;
