@@ -1,23 +1,15 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
-import { createMemoryHistory } from 'history';
 import Login from '../pages/Login';
 import App from '../App';
 import { waitFor } from '@testing-library/react';
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-
-const renderWithRouter = (component) => {
-  const history = createMemoryHistory();
-  return ({
-    ...render(<Router history={ history }>{component}</Router>), history,
-  });
-}
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
 describe('Requisito 4', () => {
   test('Verificando se existe inputs de nome, e-mail e botão', () => {
-    const { history } = renderWithRouter(<Login />);
+    renderWithRouterAndRedux(<Login />);
 
     const email = screen.getByLabelText('E-mail');
     expect(email).toBeInTheDocument();
@@ -41,7 +33,7 @@ describe('Requisito 4', () => {
       json: () => Promise.resolve(responseAPI)
     }));
 
-    const { history, debug } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const nome = screen.getByRole('textbox' ,{ name: /nome/i });
     expect(nome).toBeInTheDocument();
@@ -63,7 +55,7 @@ describe('Requisito 4', () => {
   })
 
   test('Verifica se irá para a página de Settings na rota "/settings"', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
 
     const btnSettings= screen.getByRole('button', { name: /settings/i });
     expect(btnSettings).toBeInTheDocument();

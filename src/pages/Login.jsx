@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import actionUserInfo from '../redux/actions/userInfo';
+import player from '../redux/actions/userInfo';
 
 class Login extends Component {
   constructor() {
@@ -103,7 +103,7 @@ class Login extends Component {
 }
 
 const mapDispatchToProps = ((dispatch) => ({
-  sendInfo: (state) => dispatch(actionUserInfo(state)),
+  sendInfo: (state) => dispatch(player(state)),
 }));
 
 Login.propTypes = {
