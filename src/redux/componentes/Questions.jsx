@@ -9,21 +9,15 @@ class Question extends Component {
     super();
     this.state = {
       indexAlternativa: 0,
-      loading: true,
     };
   }
 
   async componentDidMount() {
-    // const { sendQuestion } = this.props;
-    // sendQuestion();
     this.questions();
   }
 
   questions = async () => {
     this.setState(
-      {
-        loading: true,
-      },
       async () => {
         const numberErro = 3;
         const token = localStorage.getItem('token');
@@ -44,42 +38,17 @@ class Question extends Component {
 
         if (result.response_code === numberErro) {
           const { changeHistory } = this.props;
-          // token.localStorage.removeItem('token');
           changeHistory();
         } else {
           const { actionQuestFunc } = this.props;
           actionQuestFunc(randowResult);
-          this.setState({
-            loading: false,
-          });
         }
       },
     );
   };
 
-  // randomAlternativas = () => {
-  //   const { result } = this.props;
-  //   const { indexAlternativa } = this.state;
-  //   let indexAtual = {};
-  //   if (result === undefined) {
-  //     return null;
-  //   }
-  //   indexAtual = result[indexAlternativa];
-  //   let alternativas = [];
-  //   alternativas = [
-  //     ...indexAtual.incorrect_answers,
-  //     indexAtual.correct_answer,
-  //   ];
-  //   const number = 0.5;
-  //   alternativas = alternativas.sort(() => Math.random() - number);
-  //   this.setState({
-  //     guardaAlternativa: alternativas,
-  //     guardaIndexAtual: indexAtual,
-  //   });
-  // }
-
   render() {
-    const { verificarResposta, css, timer, disabled, result } = this.props;
+    const { verificarResposta, css, timer, disabled, result, btnNext } = this.props;
     const { indexAlternativa } = this.state;
 
     return (
@@ -125,6 +94,16 @@ class Question extends Component {
                       {element}
                     </button>
                   )))}
+              { btnNext && (
+                <button
+                  data-testid="btn-next"
+                  type="button"
+                >
+                  Next
+
+                </button>
+              )}
+              ;
             </div>
           </div>
         )}

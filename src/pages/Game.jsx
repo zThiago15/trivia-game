@@ -13,6 +13,7 @@ class Game extends Component {
       timer: 30,
       disabled: false,
       indexAlternativa: 0,
+      btnNext: false,
     };
   }
 
@@ -35,6 +36,10 @@ class Game extends Component {
     clearInterval(this.intervaloTempo);
   }
 
+  mostrarBotao = () => {
+    this.setState({ btnNext: true, });
+  };
+
   resetTimer = () => {
     this.setState({
       timer: 30,
@@ -48,7 +53,6 @@ class Game extends Component {
     const { indexAlternativa } = this.state;
 
     this.setState(() => ({
-      // indexAlternativa: .indexAlternativa + 1,
       css: true,
     }));
 
@@ -57,6 +61,8 @@ class Game extends Component {
     if (id === 'true') {
       this.calcularRanking(dificuldade);
     }
+
+    this.mostrarBotao();
     // return null;
   }
 
@@ -76,8 +82,6 @@ class Game extends Component {
     } else {
       enviarPontuacao((numberTen + (timer * numberEasy)));
     }
-
-    //enviarPontuacao(numberFive);
   };
 
   changeHistory = () => {
@@ -86,7 +90,7 @@ class Game extends Component {
   };
 
   render() {
-    const { css, timer, disabled } = this.state;
+    const { css, timer, disabled, btnNext } = this.state;
     return (
       <>
         <Header />
@@ -96,6 +100,7 @@ class Game extends Component {
           css={ css }
           timer={ timer }
           disabled={ disabled }
+          btnNext={ btnNext }
         />
       </>
     );
