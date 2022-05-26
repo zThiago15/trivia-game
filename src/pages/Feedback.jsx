@@ -5,6 +5,17 @@ import { Link } from 'react-router-dom';
 import Header from '../redux/componentes/Header';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    const { score, nome, email } = this.props;
+    const userInfo = [{ score, nome, email }];
+    if (localStorage.getItem('ranking') !== null) {
+      const rank = [...JSON.parse(localStorage.getItem('ranking')), ...userInfo];
+      localStorage.setItem('ranking', JSON.stringify(rank));
+    } else {
+      localStorage.setItem('ranking', JSON.stringify(userInfo));
+    }
+  }
+
   render() {
     const { assertions, score } = this.props;
     const three = 3;
@@ -24,7 +35,6 @@ class Feedback extends React.Component {
           >
             Play Again
           </button>
-
         </Link>
         <Link to="/ranking">
           <button data-testid="btn-ranking" type="button">Ranking</button>
@@ -37,6 +47,8 @@ class Feedback extends React.Component {
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
   score: state.player.score,
+  nome: state.player.name,
+  email: state.player.gravatarEmail,
 });
 
 Feedback.propTypes = {

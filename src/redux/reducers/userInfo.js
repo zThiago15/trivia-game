@@ -1,4 +1,4 @@
-import { USER_INFO, USER_SCORE, USER_TOTAL } from '../actions/userInfo';
+import { CLEAR_REDUX, USER_INFO, USER_SCORE, USER_TOTAL } from '../actions/userInfo';
 
 const INITIAL_STATE = {
   name: '',
@@ -22,6 +22,12 @@ function player(state = INITIAL_STATE, action) {
     return {
       ...state,
       assertions: state.assertions + 1,
+    };
+  case CLEAR_REDUX:
+    return {
+      ...state,
+      score: action.score,
+      assertions: action.assertions,
     };
   default:
     return state;
