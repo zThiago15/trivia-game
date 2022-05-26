@@ -8,7 +8,36 @@ class Game extends Component {
     super();
     this.state = {
       css: false,
+      timer: 30,
+      disabled: false,
     };
+  }
+
+  async componentDidMount() {
+    const umSegundo = 1000;
+    this.intervaloTempo = setInterval(() => {
+      this.setState((prevState) => ({ timer: prevState.timer - 1 }));
+    }, umSegundo);
+  }
+
+  componentDidUpdate() {
+    const timerZero = 0;
+    const { timer } = this.state;
+    if (timer === timerZero) {
+      this.resetTimer();
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervaloTempo);
+  }
+
+  resetTimer = () => {
+    this.setState({
+      timer: 30,
+      disabled: true,
+    });
+    clearInterval(this.intervaloTempo);
   }
 
   proximaQuestao = () => {
@@ -24,7 +53,7 @@ class Game extends Component {
   };
 
   render() {
-    const { css } = this.state;
+    const { css, timer, disabled } = this.state;
     return (
       <>
         <Header />
@@ -32,6 +61,8 @@ class Game extends Component {
           changeHistory={ this.changeHistory }
           proximaQuestao={ this.proximaQuestao }
           css={ css }
+          timer={ timer }
+          disabled={ disabled }
         />
       </>
     );

@@ -31,13 +31,23 @@ class Question extends Component {
           `https://opentdb.com/api.php?amount=5&token=${token}`,
         );
         const result = await response.json();
+        const number = 0.5;
+        const randowResult = result.results.map((element) => {
+          const alternativas = [
+            ...element.incorrect_answers,
+            element.correct_answer,
+          ];
+          return { ...element,
+            alternativas: alternativas.sort(() => Math.random() - number) };
+        });
+
         if (result.response_code === numberErro) {
           const { changeHistory } = this.props;
           // token.localStorage.removeItem('token');
           changeHistory();
         } else {
           const { actionQuestFunc } = this.props;
-          actionQuestFunc(result);
+          actionQuestFunc(randowResult);
           this.setState({
             loading: false,
           });
@@ -46,58 +56,73 @@ class Question extends Component {
     );
   };
 
+  // randomAlternativas = () => {
+  //   const { result } = this.props;
+  //   const { indexAlternativa } = this.state;
+  //   let indexAtual = {};
+  //   if (result === undefined) {
+  //     return null;
+  //   }
+  //   indexAtual = result[indexAlternativa];
+  //   let alternativas = [];
+  //   alternativas = [
+  //     ...indexAtual.incorrect_answers,
+  //     indexAtual.correct_answer,
+  //   ];
+  //   const number = 0.5;
+  //   alternativas = alternativas.sort(() => Math.random() - number);
+  //   this.setState({
+  //     guardaAlternativa: alternativas,
+  //     guardaIndexAtual: indexAtual,
+  //   });
+  // }
+
   render() {
-    const { result, proximaQuestao, css } = this.props;
-    const { indexAlternativa, loading } = this.state;
-    let indexAtual = {};
-    let alternativas = [];
-    if (result !== undefined) {
-      indexAtual = result[indexAlternativa];
-      alternativas = [
-        ...indexAtual.incorrect_answers,
-        indexAtual.correct_answer,
-      ];
-      const number = 0.5;
-      alternativas = alternativas.sort(() => Math.random() - number);
-    }
+    const { proximaQuestao, css, timer, disabled, result } = this.props;
+    const { loading, indexAlternativa } = this.state;
     return (
       <div>
         {loading ? (
           <Loading />
         ) : (
           <div>
-            <h2 data-testid="question-category">{indexAtual.category}</h2>
-            <h3 data-testid="question-text">{indexAtual.question}</h3>
+            <h1>{ timer }</h1>
+            <h2 data-testid="question-category">{result[indexAlternativa].category}</h2>
+            <h3 data-testid="question-text">{result[indexAlternativa].question}</h3>
             <div data-testid="answer-options">
-              {alternativas.map((element, i) => (element === indexAtual.correct_answer ? (
-                <button
-                  style={
-                    css ? { border: '3px solid rgb(6, 240, 15)' }
-                      : { color: 'black' }
-                  }
-                  key={ i }
-                  type="button"
-                  data-testid="correct-answer"
-                  onClick={ proximaQuestao }
-                >
-                  {element}
-                </button>
-              ) : (
-                <button
-                  style={
-                    css ? { border: '3px solid red' }
-                      : { color: 'black' }
-                  }
-                  key={ i }
-                  type="button"
-                  data-testid={ `wrong-answer-${indexAtual.incorrect_answers.indexOf(
-                    element,
-                  )}` }
-                  onClick={ proximaQuestao }
-                >
-                  {element}
-                </button>
-              )))}
+              {result[indexAlternativa].alternativas
+                .map((element, i) => (element === indexAlternativa.correct_answer ? (
+                  <button
+                    style={
+                      css ? { border: '3px solid rgb(6, 240, 15)' }
+                        : { color: 'black' }
+                    }
+                    key={ i }
+                    type="button"
+                    data-testid="correct-answer"
+                    disabled={ disabled }
+                    onClick={ proximaQuestao }
+                  >
+                    {element}
+                  </button>
+                ) : (
+                  <button
+                    style={
+                      css ? { border: '3px solid red' }
+                        : { color: 'black' }
+                    }
+                    key={ i }
+                    type="button"
+                    data-testid={ `wrong-answer-${indexAlternativa
+                      .incorrect_answers.indexOf(
+                        element,
+                      )}` }
+                    disabled={ disabled }
+                    onClick={ proximaQuestao }
+                  >
+                    {element}
+                  </button>
+                )))}
             </div>
           </div>
         )}
