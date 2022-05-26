@@ -5,15 +5,17 @@ import Header from '../redux/componentes/Header';
 
 class Feedback extends React.Component {
   render() {
-    const { assertions } = this.props;
+    const { assertions, score } = this.props;
     const three = 3;
     return (
       <div>
         <p data-testid="feedback-text">Feedback</p>
-        { Number(assertions) < three
+        { assertions < three
           ? <h3 data-testid="feedback-text">Could be better...</h3>
           : <h3 data-testid="feedback-text">Well Done!</h3>}
+        <p data-testid="feedback-total-question">{ assertions }</p>
         <Header />
+        <h2 data-testid="feedback-total-score">{ score }</h2>
       </div>
     );
   }
@@ -21,10 +23,11 @@ class Feedback extends React.Component {
 
 const mapStateToProps = (state) => ({
   assertions: state.player.assertions,
+  score: state.player.score,
 });
 
 Feedback.propTypes = {
-  assertions: PropTypes.string,
+  assertions: PropTypes.number,
 }.isRequired;
 
 export default connect(mapStateToProps, null)(Feedback);
