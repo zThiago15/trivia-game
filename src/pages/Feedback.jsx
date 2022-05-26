@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../redux/componentes/Header';
 
 class Feedback extends React.Component {
@@ -16,6 +17,15 @@ class Feedback extends React.Component {
         <p data-testid="feedback-total-question">{ assertions }</p>
         <Header />
         <h2 data-testid="feedback-total-score">{ score }</h2>
+        <Link to="/">
+          <button
+            data-testid="btn-play-again"
+            type="button"
+          >
+            Play Again
+          </button>
+
+        </Link>
       </div>
     );
   }
