@@ -1,6 +1,7 @@
 export const USER_INFO = 'USER_INFO';
 export const USER_QUEST = 'USER_QUEST';
 export const USER_SCORE = 'USER_SCORE';
+export const USER_TOTAL = 'USER_TOTAL';
 
 const actionUserInfo = (payload) => ({
   type: USER_INFO,
@@ -17,6 +18,9 @@ export const mudarPlacar = (pontos) => ({
   pontos,
 });
 
+export const totalAcertos = () => ({
+  type: USER_TOTAL,
+});
 // export const Questions = () => async (dispatch) => {
 //   try {
 //     const token = localStorage.getItem('token');

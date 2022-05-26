@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Questions from '../redux/componentes/Questions';
 import Header from '../redux/componentes/Header';
-import { mudarPlacar } from '../redux/actions/userInfo';
+import { mudarPlacar, totalAcertos } from '../redux/actions/userInfo';
 
 class Game extends Component {
   constructor() {
@@ -49,7 +49,7 @@ class Game extends Component {
   }
 
   verificarResposta = ({ target: { id } }) => {
-    const { perguntas } = this.props;
+    const { perguntas, total } = this.props;
     const { indexAlternativa } = this.state;
 
     this.setState(() => ({
@@ -60,6 +60,7 @@ class Game extends Component {
 
     if (id === 'true') {
       this.calcularRanking(dificuldade);
+      total();
     }
 
     this.mostrarBotao();
@@ -127,6 +128,7 @@ class Game extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   enviarPontuacao: (pontos) => dispatch(mudarPlacar(pontos)),
+  total: () => dispatch(totalAcertos()),
 });
 
 const mapStateToProps = (state) => ({
@@ -137,6 +139,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
+  total: PropTypes.string,
 }.isRequired;
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
