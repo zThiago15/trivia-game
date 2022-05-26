@@ -79,7 +79,7 @@ class Question extends Component {
   // }
 
   render() {
-    const { proximaQuestao, css, timer, disabled, result } = this.props;
+    const { verificarResposta, css, timer, disabled, result } = this.props;
     const { indexAlternativa } = this.state;
 
     return (
@@ -102,9 +102,10 @@ class Question extends Component {
                       }
                       key={ i }
                       type="button"
+                      id="true"
                       data-testid="correct-answer"
                       disabled={ disabled }
-                      onClick={ proximaQuestao }
+                      onClick={ verificarResposta }
                     >
                       {element}
                     </button>
@@ -115,10 +116,11 @@ class Question extends Component {
                           : { color: 'black' }
                       }
                       key={ i }
+                      id="false"
                       type="button"
                       data-testid={ `wrong-answer-${indexAlternativa}` }
                       disabled={ disabled }
-                      onClick={ proximaQuestao }
+                      onClick={ verificarResposta }
                     >
                       {element}
                     </button>

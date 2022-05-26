@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Questions from '../redux/componentes/Questions';
 import Header from '../redux/componentes/Header';
+import { mudarPlacar } from '../redux/actions/userInfo';
 
 class Game extends Component {
   constructor() {
@@ -10,6 +12,7 @@ class Game extends Component {
       css: false,
       timer: 30,
       disabled: false,
+      indexAlternativa: 0,
     };
   }
 
@@ -40,11 +43,41 @@ class Game extends Component {
     clearInterval(this.intervaloTempo);
   }
 
-  proximaQuestao = () => {
+  verificarResposta = ({ target: { id } }) => {
+    const { perguntas } = this.props;
+    const { indexAlternativa } = this.state;
+
     this.setState(() => ({
       // indexAlternativa: .indexAlternativa + 1,
       css: true,
     }));
+
+    const dificuldade = perguntas[indexAlternativa].difficulty;
+
+    if (id === 'true') {
+      this.calcularRanking(dificuldade);
+    }
+    // return null;
+  }
+
+  calcularRanking = (dificuldade) => {
+    const { timer } = this.state;
+    const { enviarPontuacao } = this.props;
+    const numberTen = 10;
+
+    const numberHard = 3;
+    const numberMedium = 2;
+    const numberEasy = 1;
+
+    if (dificuldade === 'hard') {
+      enviarPontuacao((numberTen + (timer * numberHard)));
+    } else if (dificuldade === 'medium') {
+      enviarPontuacao((numberTen + (timer * numberMedium)));
+    } else {
+      enviarPontuacao((numberTen + (timer * numberEasy)));
+    }
+
+    //enviarPontuacao(numberFive);
   };
 
   changeHistory = () => {
@@ -59,7 +92,7 @@ class Game extends Component {
         <Header />
         <Questions
           changeHistory={ this.changeHistory }
-          proximaQuestao={ this.proximaQuestao }
+          verificarResposta={ this.verificarResposta }
           css={ css }
           timer={ timer }
           disabled={ disabled }
@@ -69,10 +102,18 @@ class Game extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  enviarPontuacao: (pontos) => dispatch(mudarPlacar(pontos)),
+});
+
+const mapStateToProps = (state) => ({
+  perguntas: state.game.questions,
+});
+
 Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }),
 }.isRequired;
 
-export default Game;
+export default connect(mapStateToProps, mapDispatchToProps)(Game);

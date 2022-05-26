@@ -1,5 +1,6 @@
 export const USER_INFO = 'USER_INFO';
 export const USER_QUEST = 'USER_QUEST';
+export const USER_SCORE = 'USER_SCORE';
 
 const actionUserInfo = (payload) => ({
   type: USER_INFO,
@@ -9,6 +10,11 @@ const actionUserInfo = (payload) => ({
 export const actionQuest = (questions) => ({
   type: USER_QUEST,
   questions,
+});
+
+export const mudarPlacar = (pontos) => ({
+  type: USER_SCORE,
+  pontos,
 });
 
 // export const Questions = () => async (dispatch) => {
