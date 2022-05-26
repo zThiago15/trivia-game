@@ -31,6 +31,7 @@ class Question extends Component {
           `https://opentdb.com/api.php?amount=5&token=${token}`,
         );
         const result = await response.json();
+
         const number = 0.5;
         const randowResult = result.results.map((element) => {
           const alternativas = [
@@ -79,10 +80,11 @@ class Question extends Component {
 
   render() {
     const { proximaQuestao, css, timer, disabled, result } = this.props;
-    const { loading, indexAlternativa } = this.state;
+    const { indexAlternativa } = this.state;
+
     return (
       <div>
-        {loading ? (
+        { result.length === 0 ? (
           <Loading />
         ) : (
           <div>
@@ -91,38 +93,36 @@ class Question extends Component {
             <h3 data-testid="question-text">{result[indexAlternativa].question}</h3>
             <div data-testid="answer-options">
               {result[indexAlternativa].alternativas
-                .map((element, i) => (element === indexAlternativa.correct_answer ? (
-                  <button
-                    style={
-                      css ? { border: '3px solid rgb(6, 240, 15)' }
-                        : { color: 'black' }
-                    }
-                    key={ i }
-                    type="button"
-                    data-testid="correct-answer"
-                    disabled={ disabled }
-                    onClick={ proximaQuestao }
-                  >
-                    {element}
-                  </button>
-                ) : (
-                  <button
-                    style={
-                      css ? { border: '3px solid red' }
-                        : { color: 'black' }
-                    }
-                    key={ i }
-                    type="button"
-                    data-testid={ `wrong-answer-${indexAlternativa
-                      .incorrect_answers.indexOf(
-                        element,
-                      )}` }
-                    disabled={ disabled }
-                    onClick={ proximaQuestao }
-                  >
-                    {element}
-                  </button>
-                )))}
+                .map((element, i) => (element === result[indexAlternativa]
+                  .correct_answer ? (
+                    <button
+                      style={
+                        css ? { border: '3px solid rgb(6, 240, 15)' }
+                          : { color: 'black' }
+                      }
+                      key={ i }
+                      type="button"
+                      data-testid="correct-answer"
+                      disabled={ disabled }
+                      onClick={ proximaQuestao }
+                    >
+                      {element}
+                    </button>
+                  ) : (
+                    <button
+                      style={
+                        css ? { border: '3px solid red' }
+                          : { color: 'black' }
+                      }
+                      key={ i }
+                      type="button"
+                      data-testid={ `wrong-answer-${indexAlternativa}` }
+                      disabled={ disabled }
+                      onClick={ proximaQuestao }
+                    >
+                      {element}
+                    </button>
+                  )))}
             </div>
           </div>
         )}
@@ -132,7 +132,7 @@ class Question extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  result: state.game.questions.results,
+  result: state.game.questions,
   code: state.game.questions.response_code,
 });
 

@@ -1,7 +1,7 @@
 import { USER_QUEST } from '../actions/userInfo';
 
 const INITIAL_STATE = {
-  questions: {},
+  questions: [],
 };
 
 function game(state = INITIAL_STATE, action) {
