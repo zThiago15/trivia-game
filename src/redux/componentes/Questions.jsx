@@ -46,14 +46,8 @@ class Question extends Component {
     );
   };
 
-  proximaQuestao = () => {
-    this.setState((state) => ({
-      indexAlternativa: state.indexAlternativa + 1,
-    }));
-  };
-
   render() {
-    const { result } = this.props;
+    const { result, proximaQuestao, css } = this.props;
     const { indexAlternativa, loading } = this.state;
     let indexAtual = {};
     let alternativas = [];
@@ -77,21 +71,29 @@ class Question extends Component {
             <div data-testid="answer-options">
               {alternativas.map((element, i) => (element === indexAtual.correct_answer ? (
                 <button
+                  style={
+                    css ? { border: '3px solid rgb(6, 240, 15)' }
+                      : { color: 'black' }
+                  }
                   key={ i }
                   type="button"
                   data-testid="correct-answer"
-                  onClick={ this.proximaQuestao }
+                  onClick={ proximaQuestao }
                 >
                   {element}
                 </button>
               ) : (
                 <button
+                  style={
+                    css ? { border: '3px solid red' }
+                      : { color: 'black' }
+                  }
                   key={ i }
                   type="button"
                   data-testid={ `wrong-answer-${indexAtual.incorrect_answers.indexOf(
                     element,
                   )}` }
-                  onClick={ this.proximaQuestao }
+                  onClick={ proximaQuestao }
                 >
                   {element}
                 </button>
@@ -112,6 +114,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   actionQuestFunc: (questions) => dispatch(actionQuest(questions)),
 });
+
 Question.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
