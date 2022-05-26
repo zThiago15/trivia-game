@@ -37,7 +37,7 @@ class Game extends Component {
   }
 
   mostrarBotao = () => {
-    this.setState({ btnNext: true, });
+    this.setState({ btnNext: true });
   };
 
   resetTimer = () => {
@@ -63,7 +63,23 @@ class Game extends Component {
     }
 
     this.mostrarBotao();
-    // return null;
+  }
+
+  nextButton = () => {
+    const { indexAlternativa } = this.state;
+    const { history } = this.props;
+    const numberFour = 4;
+
+    if (indexAlternativa === numberFour) {
+      history.push('/feedback');
+    }
+
+    this.setState((state) => ({
+      indexAlternativa: state.indexAlternativa + 1,
+      timer: 30,
+      css: false,
+      btnNext: false,
+    }));
   }
 
   calcularRanking = (dificuldade) => {
@@ -90,7 +106,7 @@ class Game extends Component {
   };
 
   render() {
-    const { css, timer, disabled, btnNext } = this.state;
+    const { css, timer, disabled, btnNext, indexAlternativa } = this.state;
     return (
       <>
         <Header />
@@ -101,6 +117,8 @@ class Game extends Component {
           timer={ timer }
           disabled={ disabled }
           btnNext={ btnNext }
+          nextButton={ this.nextButton }
+          indexAlternativa={ indexAlternativa }
         />
       </>
     );

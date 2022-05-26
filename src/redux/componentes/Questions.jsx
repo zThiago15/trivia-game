@@ -5,13 +5,6 @@ import Loading from './Loading';
 import { actionQuest } from '../actions/userInfo';
 
 class Question extends Component {
-  constructor() {
-    super();
-    this.state = {
-      indexAlternativa: 0,
-    };
-  }
-
   async componentDidMount() {
     this.questions();
   }
@@ -48,8 +41,9 @@ class Question extends Component {
   };
 
   render() {
-    const { verificarResposta, css, timer, disabled, result, btnNext } = this.props;
-    const { indexAlternativa } = this.state;
+    const {
+      verificarResposta,
+      css, timer, disabled, result, btnNext, nextButton, indexAlternativa } = this.props;
 
     return (
       <div>
@@ -98,6 +92,7 @@ class Question extends Component {
                 <button
                   data-testid="btn-next"
                   type="button"
+                  onClick={ nextButton }
                 >
                   Next
 
