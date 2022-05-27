@@ -51,7 +51,7 @@ class Question extends Component {
           <Loading />
         ) : (
           <div>
-            <h1>{ timer }</h1>
+            <h1 data-testid="timer">{ timer }</h1>
             <h2 data-testid="question-category">{result[indexAlternativa].category}</h2>
             <h3 data-testid="question-text">{result[indexAlternativa].question}</h3>
             <div data-testid="answer-options">

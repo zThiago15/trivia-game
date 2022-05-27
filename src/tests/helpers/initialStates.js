@@ -25,3 +25,11 @@ export const mockMedio={
   }
 }
 
+export const inicialState ={
+  player: {
+    name: 'felipe',
+    assertions: 0,
+    score: 0,
+    gravatarEmail: 'teste@teste.com',
+  }
+}
