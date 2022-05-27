@@ -24,21 +24,28 @@ describe('testando a pagina feedback', () => {
   })
   it('testando o botao "play again"', () => {
     const { history } = renderWithRouterAndRedux(<App />, mockMedio, '/feedback');
-    const playAgain = screen.getByRole('button', { name: /playagain/i })
+    // const playAgain = screen.getByRole('button', { name: /playagain/i })
+    const playAgain = screen.getByTestId("btn-play-again");
     expect(playAgain).toBeInTheDocument;
     userEvent.click(playAgain);
     expect(history.location.pathname).toBe('/')
   })
   it('testando o botao "ranking"', () => {
     const { history } = renderWithRouterAndRedux(<App />, mockMedio, '/feedback');
-    const ranking = screen.getByRole('button', { name: /ranking/ });
+    // const ranking = screen.getByRole('button', { name: /ranking/ });
+    const ranking = screen.getByTestId("btn-ranking");
     expect(ranking).toBeInTheDocument();
     userEvent.click(ranking);
     expect(history.location.pathname).toBe('/ranking');
   })
-  it('testando a mensagem recebida pelo jogador',()=>{
+  it('testando a mensagem boa recebida pelo jogador', () => {
     renderWithRouterAndRedux(<App />, mockBom, '/feedback');
-    const feedbackMessage = screen.getByTestId('feedback-text');
-    expect(feedbackMessage).toHaveTextContent('Well Done!');
+    const feedbackMessage = screen.getByRole('heading', { level: 3, name: /well done!/i })
+    expect(feedbackMessage).toBeInTheDocument();
+  })
+  it('testando a mensagem ruim recebida pelo jogador', () => {
+    renderWithRouterAndRedux(<App />, mockRuim, '/feedback');
+    const feedbackMessage = screen.getByRole('heading', { level: 3, name: /could be better.../i })
+    expect(feedbackMessage).toBeInTheDocument();
   })
 })
