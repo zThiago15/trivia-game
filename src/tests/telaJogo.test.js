@@ -179,6 +179,35 @@ describe('Teste tela de jogo', () => {
     const { pathname } = history.location
     expect(pathname).toBe('/feedback');
   })
+
+  test('Token invalido', () => {
+    global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(tokenInvalido)
+    }));
+
+    global.fetch = jest.fn(() => Promise.resolve({
+        json: () => Promise.resolve(result)
+    }));
+
+    const { history } = renderWithRouterAndRedux(<App/>)
+
+    const email = screen.getByLabelText('E-mail');
+    expect(email).toBeInTheDocument();
+
+    const nome = screen.getByLabelText('Nome');
+    expect(nome).toBeInTheDocument();
+
+    userEvent.type(nome, 'julia');
+    userEvent.type(email, 'julia@julia.com');
+
+    const btnPlay = screen.getByRole('button', { name: /Play/i });
+    expect(btnPlay).toBeInTheDocument();
+    userEvent.click(btnPlay);
+
+    const { pathname } = history.location;
+    expect(pathname).toBe('/');
+    })
+
   test('Verifica timer', async () => {
     global.fetch = jest.fn(() => Promise.resolve({
         json: () => Promise.resolve(responseAPI)
