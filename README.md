@@ -34,7 +34,7 @@ O projeto foi feito em conjunto com os integrantes Felipe Martins, Fabiane Malaq
 
 
 
-⭐ Login | ⭐ Pesquisar bebida | ⭐ Bebidas renderizadas | ⭐ Pesquisar comida | ⭐ Comidas renderizadas 
+⭐ Login | ⭐ Questão 1 | ⭐ Questão 2 | ⭐ Pontuação | ⭐ Ranking
 |---|---|---|---|---|
 ![login-trivia](https://user-images.githubusercontent.com/61299540/222638969-a6faa494-1c79-4cb5-bac8-fead5bcaed02.png) | ![question1](https://user-images.githubusercontent.com/61299540/222638967-c9e606b5-d769-463b-b7ca-5bc78c07f5be.png) | ![question2](https://user-images.githubusercontent.com/61299540/222638966-7edad40a-6bb1-45b1-bede-bb6098083316.png) | ![result](https://user-images.githubusercontent.com/61299540/222638965-2d19b935-b8e7-465a-a3d1-ffe7fb1c2041.png) | ![ranking](https://user-images.githubusercontent.com/61299540/222638961-f2fe6d65-8d7e-4cf6-bdd0-0f02a85cc93a.png)
   
